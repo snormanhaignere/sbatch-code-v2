@@ -26,7 +26,11 @@ fprintf(fid, ['#SBATCH --time=' B.max_run_time_in_min '\n']); % 2-day, maximum
 fprintf(fid, ['cd "' B.directory_to_run_from '"\n']);
 
 % command
-B.command = format_matlab_command(B.matlab_fn, B.matlab_fn_args);
+MAT_file = [B.batch_directory '/' B.job_id '.mat'];
+save(MAT_file, 'B');
+B.command = ['matlab -nodesktop -nosplash -singleCompThread -r ' ...
+    '"sbatch_matlab_wrapper(''' MAT_file '''), exit"\n'];
+% B.command = format_matlab_command(B.matlab_fn, B.matlab_fn_args);
 fprintf(fid, B.command);
 
 % close file
