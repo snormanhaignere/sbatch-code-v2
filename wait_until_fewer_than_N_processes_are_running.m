@@ -5,14 +5,15 @@ function wait_until_fewer_than_N_processes_are_running(username, max_num_process
 
 while 1
     
-    % Wait 2 seconds
-    pause(0.5);
-    
     % List current jobs from a specific user
     [~,x] = unix(['squeue -u ' username]);
     if length(strfind(x,username)) < max_num_processes
         break;
     end
+    
+    % Wait a short period of time
+    pause(0.100);
+    
 end
 
 

@@ -23,7 +23,7 @@ fprintf(fid, ['#SBATCH --exclude=' B.nodes_to_exclude '\n']);
 fprintf(fid, ['#SBATCH --time=' B.max_run_time_in_min '\n']); % 2-day, maximum
 
 % cd to appropriate directory
-fprintf(fid, ['cd "' B.directory_to_run_from '"\n']);
+fprintf(fid, ['cd "' fileparts(which('create_sbatch_file.m')) '"\n']);
 
 % command
 MAT_file = [B.batch_directory '/' B.job_id '.mat'];
