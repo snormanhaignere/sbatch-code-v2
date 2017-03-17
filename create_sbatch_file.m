@@ -19,8 +19,12 @@ fprintf(fid, ['#SBATCH --error="' [B.batch_directory '/' B.job_id] '"-%%j.err\n'
 fprintf(fid, ['#SBATCH --mem=' B.mem '\n']);
 fprintf(fid, ['#SBATCH --nodes=' B.n_nodes '\n']);
 fprintf(fid, ['#SBATCH --cpus-per-task=' B.cpus_per_task '\n']);
-fprintf(fid, ['#SBATCH --exclude=' B.nodes_to_exclude '\n']);
 fprintf(fid, ['#SBATCH --time=' B.max_run_time_in_min '\n']); % 2-day, maximum
+
+% nodes to exclude
+if ~isempty(B.nodes_to_exclude)
+    fprintf(fid, ['#SBATCH --exclude=' B.nodes_to_exclude '\n']);
+end
 
 % cd to appropriate directory
 fprintf(fid, ['cd "' fileparts(which('create_sbatch_file.m')) '"\n']);
@@ -56,5 +60,5 @@ if ~isfield(B, 'nodes_to_exclude');
 end
 
 if ~isfield(B, 'max_run_time_in_min');
-    B.max_run_time_in_min = num2str(60*24*2);
+    B.max_run_time_in_min = num2str(60*10);
 end
